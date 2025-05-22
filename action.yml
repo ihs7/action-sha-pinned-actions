@@ -1,0 +1,22 @@
+name: 'Enforce Full SHA Commit Pinning in GitHub Actions'
+description: 'Enforces full SHA commit pinning for third-party actions'
+author: 'ihs7'
+branding:
+  icon: 'shield'
+  color: 'green'
+inputs:
+  workflows-path:
+    description: 'Path to workflows directory'
+    required: true
+    default: '.github'
+  fail-on-violation:
+    description: 'Whether to fail the action when violations are found (default: true)'
+    required: true
+    default: 'true'
+  exclude:
+    description: 'Patterns to exclude from checking. Can be a comma-separated list or multi-line.'
+    required: true
+    default: ''
+runs:
+  using: node20
+  main: dist/index.js

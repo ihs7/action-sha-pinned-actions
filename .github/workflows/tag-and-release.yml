@@ -1,0 +1,61 @@
+name: Tag and Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: ⚙️ Git config
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: 🔧 Setup Bun
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
+        with:
+          bun-version-file: ".bun-version"
+
+      - name: 📦 Bun install
+        run: bun install --immutable
+
+      - name: 🏗️ Build
+        run: bun run build
+
+      - name: 🏷️ Get tag
+        id: get_tag
+        run: |
+          git branch --show-current
+          git pull
+          echo "version=v$(npm pkg get version | tr -d '\"')" >> $GITHUB_OUTPUT
+          echo "major_version=v$(npm pkg get version | tr -d '\"' | cut -d. -f1)" >> $GITHUB_OUTPUT
+
+      - name: 🔖 Tag the commit
+        run: |
+          next_version=${{ steps.get_tag.outputs.version }}
+          major_version=${{ steps.get_tag.outputs.major_version }}
+          git tag -a "$next_version" -m "Version $next_version"
+          git tag -f -a "latest" -m "Latest version"
+          git tag -f -a "$major_version" -m "Latest $major_version version"
+          git push --follow-tags
+          git push -f origin latest
+          git push -f origin "$major_version"
+
+      - name: 🚀 Create release
+        id: create_release
+        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.2.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_tag.outputs.version }}
+          name: Release ${{ steps.get_tag.outputs.version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true

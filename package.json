@@ -1,0 +1,29 @@
+{
+  "name": "action-sha-pinned-actions",
+  "module": "index.ts",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "all": "bun run build && bun run format:write && bun run lint:write",
+    "build": "bun build --minify --target=node --outdir=dist ./src/index.ts",
+    "format": "biome format",
+    "format:write": "biome format --write",
+    "lint": "biome lint",
+    "lint:write": "biome lint --fix",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
+    "glob": "^11.0.2",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

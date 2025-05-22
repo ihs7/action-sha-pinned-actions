@@ -1,0 +1,63 @@
+name: On Push
+
+on: ["push"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: 🔧 Setup Bun
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
+        with:
+          bun-version-file: ".bun-version"
+
+      - name: 📦 Bun install
+        run: bun install --immutable
+
+      - name: 🦄 Format
+        run: bun run format
+
+      - name: 🔍 Lint
+        run: bun run lint
+
+      - name: 🧪 Test
+        run: bun run test
+
+      - name: 🏗️ Build
+        run: bun run build
+
+      - name: 🔄 Has diff
+        id: diff
+        run: |
+          if [ ! -d dist/ ]; then
+            echo "Expected dist/ directory does not exist.  See status below:"
+            ls -la ./
+            exit 1
+          fi
+          if [ "$(git diff --ignore-space-at-eol --text dist/ | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff --ignore-space-at-eol --text dist/
+            exit 1
+          fi
+
+      - name: 📤 Upload Artifact if diff
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: ${{ failure() && steps.diff.outcome == 'failure' }}
+        id: upload
+        with:
+          name: build
+          path: dist/
+
+      - name: ✅ Test Local Action
+        id: test-action
+        uses: ./

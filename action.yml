@@ -6,7 +6,7 @@ branding:
   color: 'green'
 inputs:
   workflows-path:
-    description: 'Path to workflows directory'
+    description: 'Path to workflows directory (searches recursively for all .yml/.yaml files)'
     required: true
     default: '.github'
   fail-on-violation:

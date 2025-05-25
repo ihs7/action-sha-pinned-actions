@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: ihs7/action-sha-pinned-actions@56a520491ac872504b268a39eacaaf729f7ea20a # v0.1.0
+      - uses: ihs7/action-sha-pinned-actions@31623484d7f7218e15493ca0d9615d4d17a7e8bf # v1.0.0
 ```
 
 ## Inputs

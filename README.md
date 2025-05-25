@@ -13,14 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: ihs7/action-sha-pinned-actions@31623484d7f7218e15493ca0d9615d4d17a7e8bf # v1.0.0
+      - uses: ihs7/action-sha-pinned-actions@e805c42c9e2c7deb3f339079c143507c28df129f # v1.0.0
 ```
 
 ## Inputs
 
 | Input               | Description                                               | Required | Default             |
 | ------------------- | --------------------------------------------------------- | -------- | ------------------- |
-| `workflows-path`    | Path to workflows directory                               | Yes      | `.github/workflows` |
+| `workflows-path`    | Path to workflows directory (searches recursively)        | Yes      | `.github` |
 | `fail-on-violation` | Whether to fail the action if violations are found        | Yes      | `true`              |
 | `exclude`           | Patterns to exclude from checking                         | Yes      | ``                  |
 

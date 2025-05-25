@@ -12,8 +12,8 @@ jobs:
   enforce-sha:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: ihs7/action-sha-pinned-actions@56a520491ac872504b268a39eacaaf729f7ea20a # v0.1.0
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v1.0.0
+      - uses: ihs7/action-sha-pinned-actions@adc331f45a23324b28151a169353938f61005951 # v1.0.0
 ```
 
 ## Inputs
@@ -46,7 +46,7 @@ The `exclude` input can be provided in two formats:
 
 ```yaml
 # Full SHA (40 characters)
-- uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+- uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v1.0.0
 
 # Local actions (relative paths)
 - uses: ./

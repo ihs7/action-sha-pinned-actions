@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noTemplateCurlyInString: needs to mimic gha usage */
 import { describe, expect, test } from "bun:test";
 import { findNonSHAPinning, parseMultilineExcludePatterns } from "../src/main";
 
@@ -92,7 +93,7 @@ describe("findNonSHAPinning", () => {
 							name: "Setup Node ${{ matrix.node }}",
 							uses: "actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65",
 							with: {
-								node_version: "${{ matrix.node }}",
+								"node-version": "${{ matrix.node }}",
 							},
 						},
 					],

@@ -19,7 +19,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: 🔧 Setup Bun
-        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
+        uses: oven-sh/setup-bun@b7a1c7ccf290d58743029c4f6903da283811b979 # v2.1.0
         with:
           bun-version-file: ".bun-version"
 
@@ -50,7 +50,7 @@ jobs:
 
       - name: 🚀 Create release
         id: create_release
-        uses: softprops/action-gh-release@6da8fa9354ddfdc4aeace5fc48d7f679b5214090 # v2.4.1
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
